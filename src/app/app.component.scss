@@ -1,0 +1,71 @@
+body{
+	display: flex;
+	flex-direction: column;
+}
+
+#header{
+	//border: 1px solid black;
+	padding: .1%;
+	background-color: #16a085;
+	color: white;
+
+	header{
+		margin-left: 3%;
+		font-family: 'Special Elite', cursive;
+	}
+}
+
+
+.app-space{
+	display: flex;
+	justify-content: space-around;
+	height: 42vw;
+	padding: .15%;
+	background-color: #b8e994;
+
+	.map-space{
+		width: 70%;
+		//border: 1px solid gray;
+		padding: 0;
+	}
+
+	.tool-space{
+		width: 25%;
+		//border: 1px solid green;
+		background-color: white;
+
+		select{
+			max-width: 100%;
+		}
+	}
+
+	#user-control{
+		margin: 3%;
+	}
+
+	#advertizing-block{
+		margin: 3%;
+
+		img{
+			width: 100%;
+			height: auto;
+			margin-top: 3vw;
+		}
+	}
+}
+
+@media(max-width: 768px){
+	.app-space{
+		flex-direction: column;
+		margin-top: 400px;
+
+		.map-space{
+			width: 100%;
+			height: 500px;
+		}
+
+		.tool-space{
+			width: 100%;
+		}
+	}
+}

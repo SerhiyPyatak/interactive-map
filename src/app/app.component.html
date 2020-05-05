@@ -1,0 +1,135 @@
+
+<div id="header">
+<header>
+  <h1>Поиск объектов на карте г.Винница</h1>
+</header>
+<hr>
+<hr>
+</div>
+
+<div class="app-space">
+  <div class="map-space">
+  	<app-map></app-map>			<!--добавляем в шаблон компонент карты здесь -->
+  </div>
+  <div class="tool-space">
+   <form id="user-control">
+   	<h3>Выберите из списка объект для позиционирования на карте:</h3>
+   		<select form="user-control" (change)="getLocation($event.target.value)">
+   			<option value = "null-val">-----------------</option>
+   			<optgroup label = "Больницы">
+        		<option value = "principal-hospital-1">
+        			Городская клиническая №1
+        		</option>
+        		<option value = "principal-hospital-2">
+        			Городская клиническая №2
+        		</option>
+        		<option value = "principal-hospital-3">
+        			Городская клиническая №3
+        		</option>
+        		<option value = "region-hospital-pirogov">
+        			Областная клиническая им. Н.И.Пирогова
+        		</option>
+        		<option value = "military-hospital">
+        			Военный Госпиталь
+        		</option>
+        		<option value = "region-mental-hospital-ushch">
+        			Областная психоневрологическая им. А.И.Ющенко
+        		</option>
+        		<option value = "region-mental-hospital-2">
+        			Областная психиатрическая №2
+        		</option>
+        		<option value = "region-hemotransfusion station">
+        			Областная станция переливания крови
+        		</option>
+        		<option value = "war-veteran-hospital">
+        			Областной госпиталь для инвалидов ВОВ
+        		</option>
+        		<option value = "region-dermatovenerologic-dispensary">
+        			Областной кожно-венерологический диспансер
+        		</option>
+        		<option value = "region-children-hospital">
+        			Областная детская
+        		</option>
+        		<option value = "region-oncologic-dispensary">
+        			Областной Онкологический Диспансер
+        		</option>
+        		<option value = "region-tb-dispensary">
+        			Областной противотуберкулезный диспансер
+        		</option>
+        		<option value = "region-endocrinological-dispensary">
+        			Областной эндокринологический диспансер
+        		</option>
+        		<option value = "railway-hospital">
+        			Узловая клиническая больница
+        		</option>
+    		</optgroup>
+    		<optgroup label = "Высшие учебные заведения">
+        		<option value = "tech-university">
+        			Национальний технический университет (ВНТУ)
+        		</option>
+        		<option value = "pedagogic-university">
+        			Государственный педагогический университет им.Коцюбинского
+        		</option>
+        		<option value = "agrarian-university">
+        			Национальный аграрный университет (ВНАУ)
+        		</option>
+        		<option value = "medical-university">
+        			Национальный медицинский университет им. Пирогова (ВНМУ)
+        		</option>
+        		<option value = "commercial-university">
+        			Торгово-экономический институт КНТЭУ
+        		</option>
+    		</optgroup>
+    		<optgroup label = "Музеи">
+    			<option value = "pirogov-museum">
+        			Музей-усадьба Н. И. Пирогова
+        		</option>
+        		<option value = "warriors-museum">
+        			Музей памяти воинов Винницы
+        		</option>
+        		<option value = "automotoradio-museum">
+        			Автомотовелофоторадио
+        		</option>
+        		<option value = "tram-museum">
+        			Музей винницкого трамвая
+        		</option>
+        		<option value = "airforce-museum">
+        			Музей воздушных сил ВСУ
+        		</option>
+        		<option value = "local-lore-museum">
+        			Винницкий областной краеведческий музей
+        		</option>
+    		</optgroup>
+    		<optgroup label = "Театры и кино">
+    			<option value = "region-theatre">
+    				Областной театр им.Садовского
+    			</option>
+        		<option value = "mir-cinema">Кинопалац «Мир»</option>
+        		<option value = "kocuba-cinema">Коцюбинского</option>
+        		<option value = "smart-cinema">SmartCinema</option>
+        		<option value = "rodina-sinema">Родина</option>
+    		</optgroup>
+    		<optgroup label = "Торгово-развлекательные центры">
+    			<option value = "trc-megamoll">Мегамолл</option>
+        		<option value = "trc-anastasia">Анастасия</option>
+        		<option value = "trc-magigrand">Магігранд</option>
+        		<option value = "trc-sky-park">Sky Park</option>
+        		<option value = "trc-october">Жовтень</option>
+    		</optgroup>
+    		<optgroup label = "Транспортные узлы">
+    			<option value = "railway-st">Ж/д вокзал</option>
+    			<option value = "autost-central">Центральный автовокзал</option>
+    			<option value = "autost-east">Восточный автовокзал</option>
+    			<option value = "autost-west">Западный автовокзал</option>
+    			<option value = "airport">Аэропорт</option>
+    		</optgroup>
+    		<optgroup label = "********************">
+    			<option value = "prezentor-loc">Prezentor</option>
+    		</optgroup>
+   		</select>
+   </form>
+   <div id="advertizing-block">
+   	<img src="https://cf2.ppt-online.org/files2/slide/u/uC8Yap7G1hdqD43HQRlwFEL6NxcAgtbS5foIMs/slide-1.jpg" alt="Рекламный баннер">
+   </div>
+  </div>
+</div>
