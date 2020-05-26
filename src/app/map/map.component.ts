@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 
 @Component({
   selector: 'app-map',
@@ -24,6 +25,7 @@ export class MapComponent implements AfterViewInit {
   private map; 					//переменная для манипулирования объектом карты
   private myMarker;				//переменная для манипулирования маркером на карте
   private isMarkedAdded:boolean=false;	//флаг, поднимающийся при установке маркера на карту
+  private provider = new OpenStreetMapProvider();
 
   constructor() { }
 
@@ -49,11 +51,20 @@ export class MapComponent implements AfterViewInit {
   		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	});
 
+   
+   //если нужно - можно создать геопоиск как отдельный элемент DOM
+   /*const searchControl = new GeoSearchControl({
+  	provider: provider,
+  	style: 'button',
+   });*/
+
    /*Добавляем картографическую "мозаику" к объекту-карте
    Теперь карта будет отображаться на веб-странице. Для корректного отображения
    карты нужно импортировать файл стилей "./node_modules/leaflet/dist/leaflet.css"
    в секции build и test файла angular.json либо в корневой файл styles.css*/
    tiles.addTo(this.map);
+   //если нужно - можно єлемент управления геопоиска добавить прямо на карту
+   //this.map.addControl(searchControl);
  };
 
  /*Данный метод отвечает за создание объекта-маркера и его добавление на карту.
@@ -78,20 +89,27 @@ export class MapComponent implements AfterViewInit {
   /*Этот метод является основным во взаимодействии с пользовательским вводом:
   именно этот метод в конечном счёте вызывается при выборе пользователем элемента
   списка*/
-  pinPoint(latid, longit) {
-  	//Если на карту ранее уже был установлен маркер...
-  	if (this.isMarkedAdded) {
-  		//...то перемещаем его на выбранную локацию согласно элементу списка
-  		this.myMarker.setLatLng(L.latLng([ latid, longit ]));
-  	}
-  	else {
-  		//...иначе создаём маркер и позиционируем его на карте
-  		this.myMarker = this.addMrkr(latid, longit);
-  	};
+   
+  pinPointA (queryStr) {
+  	const schResults = this.provider.search({ query: queryStr });
+  	schResults.then (result => {
+  		console.log('************************************');
+		console.log('Found latitude: ' + result[0].y);
+		console.log('Found longitude: ' + result[0].x);
+		
+  		//Если на карту ранее уже был установлен маркер...
+  		if (this.isMarkedAdded) {
+  			//...то перемещаем его на выбранную локацию согласно элементу списка
+  			this.myMarker.setLatLng(L.latLng([ Number(result[0].y), Number(result[0].x) ]));
+  		}
+  		else {
+  			//...иначе создаём маркер и позиционируем его на карте
+  			this.myMarker = this.addMrkr(Number(result[0].y), Number(result[0].x));
+  		};
   	/*под финал вызываем из библиотеки leaflet метод flyTo, который реализует
   	анимированный эффект "перелёта" из одной локации на карте в другую, центрирует
   	карту на новой выбранной локации*/
-  	this.map.flyTo(L.latLng([ latid, longit ]), 17);
+  	this.map.flyTo(L.latLng([ Number(result[0].y), Number(result[0].x) ]), 18);		
+  	})  	
   };
  }
-

@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { icon, latLng, marker, tileLayer } from 'leaflet';
 import { MapComponent } from './map/map.component';
 import * as L from 'leaflet';
+import 'leaflet-control-geocoder';
 
 @Component({
   selector: 'app-root',
@@ -20,269 +21,270 @@ export class AppComponent implements AfterViewInit {
 
   /*Массив объектов, каждый из которых представляет собой предопределенную
   локацию на карте Винницы*/
-  private locationsRepository=[
+  private locationsDataBase = [
     {
-      name: "principal-hospital-1",
-      latit: 49.23644575846,
-      longit: 28.41398768525
-    },
+          name: "principal-hospital-1",
+          housenum: '96',
+          street: 'Хмельницьке шосе'
+      },
 
-    {
-      name: "region-oncologic-dispensary",
-      latit: 49.23726862005,
-      longit: 28.41680227053
-    },
+      {
+          name: "region-oncologic-dispensary",
+          housenum: '84',
+          street: 'Хмельницьке шосе'
+      },
 
-    {
-      name: "region-children-hospital",
-      latit: 49.24004258481,
-      longit: 28.41031132471
-    },
+      {
+          name: "region-children-hospital",
+         housenum: '108',
+          street: 'Хмельницьке шосе'
+      },
 
-    {
-      name: "principal-hospital-2",
-      latit: 49.24942922481,
-      longit: 28.47735568442
-    },
+      {
+          name: "principal-hospital-2",
+          housenum: '68',
+          street: 'Київська'
+      },
 
-    {
-      name: "principal-hospital-3",
-      latit: 49.21272091418,
-      longit: 28.46957334979
-    },
+      {
+          name: "principal-hospital-3",
+          housenum: '138',
+          street: 'Маяковського'
+      },
 
-    {
-      name: "region-hospital-pirogov",
-      latit: 49.23006639204,
-      longit: 28.45082552774
-    },
+      {
+          name: "region-hospital-pirogov",
+          housenum: '52',
+          street: 'Пирогова'
+      },
 
-    {
-      name: "military-hospital",
-      latit: 49.21894943649,
-      longit: 28.45891507013
-    },
+      {
+          name: "military-hospital",
+          housenum: '187',
+          street: 'Коріатовичів'
+      },
 
-    {
-      name: "region-mental-hospital-ushch",
-      latit: 49.21283826914,
-      longit: 28.44395471537
-    },
+      {
+          name: "region-mental-hospital-ushch",
+          housenum: '',
+          street: 'психіатрична лікарня ім.Ющенка'
+      },
 
-    {
-      name: "region-tb-dispensary",
-      latit: 49.19250246843,
-      longit: 28.39204794068
-    },
+      {
+          name: "region-tb-dispensary",
+          housenum: '',
+          street: 'тубдиспансер'
+      },
 
-    {
-      name: "region-mental-hospital-2",
-      latit: 49.22412636874,
-      longit: 28.34288841385
-    },
+      {
+          name: "region-mental-hospital-2",
+          housenum: '',
+          street: 'Вінницька обласна психіатрична лікарня №2'
+      },
 
-    {
-      name: "region-hemotransfusion station",
-      latit: 49.22876479958,
-      longit: 28.45076535474
-    },
+      {
+          name: "region-hemotransfusion station",
+          housenum: '48',
+          street: 'Пирогова'
+      },
 
-    {
-      name: "war-veteran-hospital",
-      latit: 49.21194652795,
-      longit: 28.44199320944
-    },
+      {
+         name: "war-veteran-hospital",
+          housenum: '',
+          street: 'госпіталь ветеранів ВВВ'
+      },
 
-    {
-      name: "region-dermatovenerologic-dispensary",
-      latit: 49.23662512030,
-      longit: 28.47230305400
-    },
+      {
+          name: "region-dermatovenerologic-dispensary",
+          housenum: '',
+          street: 'шкірно-венерологічний диспансер'
+      },
 
-    {
-      name: "region-endocrinological-dispensary",
-      latit: 49.24962338716,
-      longit: 28.45616709870
-    },
+      {
+          name: "region-endocrinological-dispensary",
+          housenum: '',
+          street: 'Ендокринологічний центр'
+      },
 
-    {
-      name: "railway-hospital",
-      latit: 49.23988107055,
-      longit: 28.50500347224
-    },
+      {
+          name: "railway-hospital",
+          housenum: '6',
+          street: 'Коцюбинського'
+      },
 
-    {
-      name: "tech-university",
-      latit: 49.23449957322,
-      longit: 28.41059460600
-    },
+      {
+          name: "tech-university",
+          housenum: '95',
+          street: 'Хмельницьке шосе'
+      },
 
-    {
-      name: "pedagogic-university",
-      latit: 49.24198818589,
-      longit: 28.49648839549
-    },
+      {
+          name: "pedagogic-university",
+          housenum: '',
+          street: 'ВДПУ'
+      },
 
-    {
-      name: "agrarian-university",
-      latit: 49.20863257911,
-      longit: 28.40639740347
-    },
+      {
+          name: "agrarian-university",
+          housenum: '',
+          street: 'ВНАУ'
+      },
 
-    {
-      name: "medical-university",
-      latit: 49.22780897981,
-      longit: 28.44653748308
-    },
+      {
+          name: "medical-university",
+          housenum: '56',
+          street: 'Пирогова'
+      },
 
-    {
-      name: "commercial-university",
-      latit: 49.23375840154,
-      longit: 28.46250824222
-    },
+      {
+          name: "commercial-university",
+          housenum: '',
+          street: 'торговельно-економічний інститут'
+      },
 
-    {
-      name: "pirogov-museum",
-      latit: 49.21604862178,
-      longit: 28.40832708114
-    },
+      {
+          name: "pirogov-museum",
+          housenum: '',
+          street: 'музей-садиба Пирогова'
+      },
 
-    {
-      name: "warriors-museum",
-      latit: 49.23493704326,
-      longit: 28.46960678375
-    },
+      {
+          name: "warriors-museum",
+          housenum: '20',
+          street: 'Оводова'
+      },
 
-    {
-      name: "automotoradio-museum",
-      latit: 49.23356394835,
-      longit: 28.47907909947
-    },
+      {
+          name: "automotoradio-museum",
+          housenum: '',
+          street: 'музей ретро-техніки'
+      },
 
-    {
-      name: "tram-museum",
-      latit: 49.23288080966,
-      longit: 28.43711421571
-    },
+      {
+          name: "tram-museum",
+          housenum: '',
+          street: 'музей трамваю'
+      },
 
-    {
-      name: "airforce-museum",
-      latit: 49.25084642328,
-      longit: 28.50035084388
-    },
+      {
+          name: "airforce-museum",
+          housenum: '',
+          street: 'Музей Повітряних Сил'
+      },
 
-    {
-      name: "local-lore-museum",
-      latit: 49.23265115443,
-      longit: 28.47612207785
-    },
+      {
+          name: "local-lore-museum",
+          housenum: '',
+          street: 'обласний краєзнавчий музей'
+      },
 
-    {
-      name: "region-theatre",
-      latit: 49.23432814076,
-      longit: 28.46370748131
-    },
+      {
+          name: "region-theatre",
+          housenum: '',
+          street: 'театр Садовського'
+      },
 
-    {
-      name: "mir-cinema",
-      latit: 49.22438923497,
-      longit: 28.41927301886
-    },
+      {
+          name: "mir-cinema",
+          housenum: '',
+          street: 'кінотеатр Мир'
+      },
 
-    {
-      name: "kocuba-cinema",
-      latit: 49.23358513476,
-      longit: 28.46618615256
-    },
+      {
+          name: "kocuba-cinema",
+          housenum: '66а',
+          street: 'Соборна'
+      },
 
-    {
-      name: "smart-cinema",
-      latit: 49.23360558586,
-      longit: 28.47137804249
-    },
+      {
+          name: "smart-cinema",
+          housenum: '',
+          street: 'SmartCinema'
+      },
 
-    {
-      name: "rodina-sinema",
-      latit: 49.23418705369,
-      longit: 28.47053046445
-    },
+      {
+          name: "rodina-sinema",
+          housenum: '47',
+          street: 'Оводова'
+      },
 
-    {
-      name: "trc-megamoll",
-      latit: 49.22769587357,
-      longit: 28.42685156037
-    },
+      {
+          name: "trc-megamoll",
+          housenum: '',
+          street: 'Мегамолл'
+      },
 
-    {
-      name: "trc-anastasia",
-      latit: 49.22815724417,
-      longit: 28.45103877098
-    },
+      {
+          name: "trc-anastasia",
+          housenum: 'Анастасія',
+          street: 'Пирогова'
+      },
 
-    {
-      name: "trc-magigrand",
-      latit: 49.22646172909,
-      longit: 28.41268305842
-    },
+      {
+          name: "trc-magigrand",
+          housenum: '',
+          street: 'Магігранд'
+      },
 
-    {
-      name: "trc-sky-park",
-      latit: 49.23395069701,
-      longit: 28.46988089359
-    },
+      {
+          name: "trc-sky-park",
+          housenum: '',
+          street: 'Скайпарк'
+      },
 
-    {
-      name: "trc-october",
-      latit: 49.23955827014,
-      longit: 28.49779554927
-    },
+      {
+          name: "trc-october",
+          housenum: '',
+          street: 'Жовтень'
+      },
 
-    {
-      name: "railway-st",
-      latit: 49.23936900103,
-      longit: 28.51045845899
-    },
+      {
+          name: "railway-st",
+          housenum: '',
+          street: 'залізничний вокзал'
+      },
 
-    {
-      name: "autost-central",
-      latit: 49.23665288439,
-      longit: 28.48309508560
-    },
+      {
+          name: "autost-central",
+          housenum: '',
+          street: 'центральний автовокзал'
+      },
 
-    {
-      name: "autost-east",
-      latit: 49.24430657094,
-      longit: 28.53493938518
-    },
+      {
+          name: "autost-east",
+         housenum: '',
+          street: 'східний автовокзал'
+      },
 
-    {
-      name: "autost-west",
-      latit: 49.23687867529,
-      longit: 28.40394103782
-    },
+      {
+          name: "autost-west",
+          housenum: '',
+          street: 'західний автовокзал'
+      },
 
-    {
-      name: "airport",
-      latit: 49.24347213230,
-      longit: 28.60622075658
-    },
+      {
+          name: "airport",
+          housenum: '',
+          street: 'аеропорт'
+      },
 
-    {
-      name: "prezentor-loc",
-      latit: 49.23520679237,
-      longit: 28.42820779144
-    }
+      {
+          name: "prezentor-loc",
+          housenum: '',
+          street: 'кряж'
+      }
   ];
 
   /*Данный метод по выбранному из списка наименованию возвращает
    соответствующий объект со значениями его координат на карте */
   getLocation(objName) {
-    /*по идентификатору выбранного элемента списка определяем географические 
-    координаты соотв. локации на карте*/
-    const position = this.locationsRepository.filter(loc=>loc.name===objName);
-    /*вызываем метод pinPoint компонента-карты и передаём туда требуемые координаты
-    локации для установки маркера и центрирования карты*/
-    this.child.pinPoint(position[0].latit, position[0].longit);
+    /*по идентификатору выбранного элемента списка определяем адрес соотв. 
+    локации на карте*/
+    const position = this.locationsDataBase.filter(loc=>loc.name===objName);
+    const halfQuery = [position[0].housenum, position[0].street, "Вінниця"];
+    /*вызываем метод pinPoint компонента-карты и передаём туда требуемые адрес
+    локации для нахождения координат и установки маркера и центрирования карты*/
+    this.child.pinPointA(halfQuery.join(' '));
     //console.log(JSON.stringify(position));
    }
 
